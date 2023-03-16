@@ -26,7 +26,7 @@ const LoginPage = () => {
     //   // user.password === userData.password
     //   console.log(user)
     // );
-    const validUser = users.items.some(
+    const validUser = users.items.find(
       (user) =>
         user.fields.username === userData.username &&
         user.fields.password === userData.password
