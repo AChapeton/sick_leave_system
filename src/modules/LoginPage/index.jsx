@@ -5,12 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useContentful } from "../../useContentful";
 
 const LoginPage = () => {
-  const { getAllEmployees } = useContentful();
-
-  const fetchEmployees = async () => {
-    const employees = await getAllEmployees();
-    console.log("List of employees", employees);
-  };
+  const { getAllUsers } = useContentful();
 
   // const checkLogin = useLogin((state) => state.checkLogin);
   const navigate = useNavigate();
@@ -22,12 +17,21 @@ const LoginPage = () => {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (userData) => {
-    const validUser = users.some(
+  const onSubmit = async (userData) => {
+    const users = await getAllUsers();
+    // console.log(users.items);
+    // console.log(users.items[0].fields.username);
+    // const validUser = users.items.fields.some((user) =>
+    //   // user.username === userData.username &&
+    //   // user.password === userData.password
+    //   console.log(user)
+    // );
+    const validUser = users.items.some(
       (user) =>
-        user.username === userData.username &&
-        user.password === userData.password
+        user.fields.username === userData.username &&
+        user.fields.password === userData.password
     );
+    console.log(validUser);
     reset();
     validateUser(validUser);
   };
@@ -44,7 +48,6 @@ const LoginPage = () => {
   return (
     <div>
       <h3>Login</h3>
-      <button onClick={fetchEmployees}>Employees</button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"

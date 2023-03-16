@@ -12,19 +12,19 @@ const useContentful = () => {
     host: "cdn.contentful.com",
   });
 
-  const getAllEmployees = async () => {
+  const getAllUsers = async () => {
     try {
-      const employees = await client.getEntries({
-        content_type: "employee",
+      const users = await client.getEntries({
+        content_type: "user",
         select: "fields",
       });
-      return employees;
+      return users;
     } catch (error) {
-      console.log("Error fetching employees: ", error);
+      console.log("Error fetching users: ", error);
     }
   };
 
-  return { getAllEmployees };
+  return { getAllUsers };
 };
 
 export { useContentful };
