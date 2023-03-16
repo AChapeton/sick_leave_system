@@ -6,8 +6,7 @@ import { useContentful } from "../../useContentful";
 
 const LoginPage = () => {
   const { getAllUsers } = useContentful();
-
-  // const checkLogin = useLogin((state) => state.checkLogin);
+  const saveLoggedUser = useLogin((state) => state.saveLoggedUser);
   const navigate = useNavigate();
 
   const {
@@ -39,6 +38,7 @@ const LoginPage = () => {
   const validateUser = (validUser) => {
     if (validUser) {
       console.log("Welcome");
+      saveLoggedUser(validUser);
       navigate("/home");
     } else {
       console.log("Keep trying");
