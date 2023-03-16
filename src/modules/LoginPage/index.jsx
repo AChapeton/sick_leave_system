@@ -2,29 +2,18 @@ import React from "react";
 import { useLogin } from "../../hooks/store";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useContentful } from "../../useContentful";
 
 const LoginPage = () => {
+  const { getAllEmployees } = useContentful();
+
+  const fetchEmployees = async () => {
+    const employees = await getAllEmployees();
+    console.log("List of employees", employees);
+  };
+
   // const checkLogin = useLogin((state) => state.checkLogin);
   const navigate = useNavigate();
-
-  const users = [
-    {
-      name: "Edith Romero",
-      userId: "1",
-      username: "Eddy",
-      password: "eddy01",
-      employeeId: "1",
-      role: "hr_specialist",
-    },
-    {
-      name: "Andres Chapeton",
-      userId: "2",
-      username: "Chape",
-      password: "chape01",
-      employeeId: "2",
-      role: "employee",
-    },
-  ];
 
   const {
     register,
@@ -39,7 +28,7 @@ const LoginPage = () => {
         user.username === userData.username &&
         user.password === userData.password
     );
-
+    reset();
     validateUser(validUser);
   };
 
@@ -55,6 +44,7 @@ const LoginPage = () => {
   return (
     <div>
       <h3>Login</h3>
+      <button onClick={fetchEmployees}>Employees</button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
