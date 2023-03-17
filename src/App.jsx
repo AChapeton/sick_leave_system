@@ -1,7 +1,9 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { LoginPage } from "./modules/LoginPage";
-import { HomePage } from "./modules/HomePage";
-import { NewApplicationPage } from "./modules/NewApplicationPage";
+import { LoginPage } from "./pages/LoginPage";
+import { HomePage } from "./pages/HomePage";
+import { NewApplicationPage } from "./pages/NewApplicationPage";
+import { SignUpAsPage } from "./pages/SignUpAsPage";
+import { SignUpPage } from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<SignUpPage />} />
+          <Route path="/register_as" element={<SignUpAsPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/new_application" element={<NewApplicationPage />} />
           <Route path="*" element={<p>Not Found</p>} />

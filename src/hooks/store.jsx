@@ -10,4 +10,13 @@ const useLogin = create((set) => ({
   },
 }));
 
+const useSignin = create((set) => ({
+  chooseRol: "",
+  setRole: (role) => {
+    set((state) => {
+      console.log(role);
+    });
+  },
+}));
+
 export { useLogin };

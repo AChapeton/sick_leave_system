@@ -3,6 +3,8 @@ import { useLogin } from "../../hooks/store";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useContentful } from "../../useContentful";
+import { NavLink, Link } from "react-router-dom";
+import { SignUpAsPage } from "../SignUpAsPage";
 
 const LoginPage = () => {
   const { getAllUsers } = useContentful();
@@ -69,7 +71,7 @@ const LoginPage = () => {
         <button>Log in</button>
       </form>
       <p>
-        Don't have an account? <span>Sign in</span>
+        Don't have an account? <Link to="/register_as">Sign in</Link>
       </p>
     </div>
   );
