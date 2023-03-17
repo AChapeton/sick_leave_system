@@ -1,7 +1,6 @@
 // import { createClient } from "contentful";
 // import contentful from "contentful-management";
 import { createClient } from "contentful-management";
-import { getEnvironment } from "contentful-management";
 import { create } from "zustand";
 
 const ENVIRONMENT = "master";
@@ -10,10 +9,19 @@ const ACCESS_TOKEN = "CFPAT-Ci_G875FAGKlt5pxQETLsvLB8KBB9Ym8NQkFH_AuBkI";
 const DEFAULT_LNG = "en-US";
 
 const client = createClient({
-  space: SPACE_ID,
+  // space: SPACE_ID,
   accessToken: ACCESS_TOKEN,
   // host: "cdn.contentful.com",
 });
+
+let environment = null;
+
+const startEnvironment = async () => {
+  const space = await client.getSpace(SPACE_ID);
+  const newEnvironment = await space.getEnvironment(ENVIRONMENT);
+
+  environment = newEnvironment;
+};
 
 // client
 //   .getSpace(SPACE_ID)
@@ -43,10 +51,35 @@ const login = async (username, password) => {
         "fields.password": password,
       })
     )
-    .then((response) => userFetchTransformer(response.items));
+    .then((response) => {
+      const transformedUser = arrayFetchTransformer(response.items);
+      const transformedEmployee = arrayFetchTransformer(
+        response.includes.Entry
+      );
+
+      return transformedUser.map((user, index) => ({
+        ...user,
+        employee: transformedEmployee.find(
+          ({ sysId }) => sysId === user.employeeId.sys.id
+        ),
+      }));
+    });
 };
 
-const userFetchTransformer = (data) =>
+const getApplicationsByUser = async (user) => {
+  return await client
+    .getSpace(SPACE_ID)
+    .then((space) => space.getEnvironment(ENVIRONMENT))
+    .then((environment) =>
+      environment
+        .getPublishedEntries({
+          content_type: "application",
+        })
+        .then((response) => console.log(response))
+    );
+};
+
+const arrayFetchTransformer = (data) =>
   data.map((item) =>
     Object.keys(item.fields).reduce(
       (prev, key) => ({
@@ -57,4 +90,4 @@ const userFetchTransformer = (data) =>
     )
   );
 
-export { login };
+export { login, getApplicationsByUser };
