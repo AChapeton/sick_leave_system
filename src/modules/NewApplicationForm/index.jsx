@@ -16,8 +16,9 @@ const NewApplicationForm = () => {
 
   const startDateWatched = watch(["startDate"]);
   const endDateWatched = watch(["endDate"]);
+  const coverageDaysWatched = watch(["coverageDays"]);
 
-  if (days > 0) {
+  if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
       console.log(applicationData);
     };
@@ -29,7 +30,8 @@ const NewApplicationForm = () => {
       parseISO(...endDateWatched),
       parseISO(...startDateWatched)
     );
-    console.log(days);
+    console.log("days", days);
+    console.log("cover", ...coverageDaysWatched);
     setDays(days);
   }, [startDateWatched, endDateWatched]);
 
@@ -77,10 +79,17 @@ const NewApplicationForm = () => {
           type="number"
           name="coverageDays"
           id="coverageDays"
-          {...register("coverageDays", { required: true })}
+          // min="1"
+          {...register("coverageDays", { required: true, min: 1 })}
         />
         {errors.coverageDays?.type === "required" && (
           <p>Coverage days are required</p>
+        )}
+        {errors.coverageDays?.type === "min" && (
+          <p>Coverage days cannot be minor than 1</p>
+        )}
+        {days !== Number(coverageDaysWatched.toString()) && (
+          <p>Converage days does not coincide with dates</p>
         )}
       </div>
       <div>
@@ -95,9 +104,7 @@ const NewApplicationForm = () => {
           })}
         />
         {errors.startDate?.type === "required" && <p>Start date is required</p>}
-        {/* {errors.startDate?.type === "validate" &&
-          days > 0(<p>Start date cannot be after end date</p>)} */}
-        {days <= 0 && <p>Start date cannot be after end date</p>}
+        {days <= 0 && <p>Start date cannot be bigger or equal than end date</p>}
       </div>
       <div>
         <label>Sick leave end date</label>
