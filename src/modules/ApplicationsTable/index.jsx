@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLogin, useApplications } from "../../hooks/store";
 import { getApplicationsByUser } from "../../useContentful";
+import DataTable from "react-data-table-component";
 
 const ApplicationsTable = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
@@ -21,7 +22,25 @@ const ApplicationsTable = () => {
     }
     setApplications(currentUserApps);
     // console.log(currentUserApps);
+    console.log("apps", applications);
   };
+
+  //Probar pasar todos
+  // Buscar como ignorar name para employee
+  const columns = [
+    {
+      name: "Medical diagnostic",
+      selector: (row) => row.medicalDiagnostic,
+    },
+    {
+      name: "Doctor",
+      selector: (row) => row.doctorName,
+    },
+    {
+      name: "Days of coverage",
+      selector: (row) => row.coverageDays,
+    },
+  ];
 
   useEffect(() => {
     onObtainUserApps();
@@ -31,7 +50,7 @@ const ApplicationsTable = () => {
     <div>
       ApplicationsTable
       <p>{console.log(loggedUser)}</p>
-      {/* <button onClick={onObtainUserApps}>Obtain</button> */}
+      <DataTable columns={columns} data={applications} />
     </div>
   );
 };
