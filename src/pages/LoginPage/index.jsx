@@ -20,10 +20,7 @@ const LoginPage = () => {
   } = useForm();
 
   const onSubmit = async (userData) => {
-    // const users = await getAllUsers();
-    console.log(userData);
     const user = await login(userData.username, userData.password);
-    // console.log("user", user);
     reset();
     validateUser(user);
   };
@@ -31,6 +28,7 @@ const LoginPage = () => {
   const validateUser = (user) => {
     if (user.length > 0) {
       console.log("Welcome");
+      console.log("Loggued User", user);
       saveLoggedUser(user);
       navigate("/home");
     } else {

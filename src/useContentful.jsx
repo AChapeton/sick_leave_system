@@ -52,6 +52,7 @@ const login = async (username, password) => {
       })
     )
     .then((response) => {
+      // console.log("Logged", response);
       const transformedUser = arrayFetchTransformer(response.items);
       const transformedEmployee = arrayFetchTransformer(
         response.includes.Entry
@@ -75,7 +76,19 @@ const getApplicationsByUser = async (user) => {
         .getPublishedEntries({
           content_type: "application",
         })
-        .then((response) => console.log(response))
+        .then((response) => {
+          const transformedApps = arrayFetchTransformer(response.items);
+          const transformedEmployee = arrayFetchTransformer(
+            response.includes.Entry
+          );
+
+          return transformedApps.map((app, index) => ({
+            ...app,
+            employee: transformedEmployee.find(
+              ({ sysId }) => sysId === app.employeeId.sys.id
+            ),
+          }));
+        })
     );
 };
 

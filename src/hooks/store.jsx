@@ -18,4 +18,13 @@ const useSignin = create((set) => ({
   },
 }));
 
-export { useLogin, useSignin };
+const useApplications = create((set) => ({
+  applications: [],
+  setApplications: (apps) => {
+    set((state) => {
+      return { applications: apps };
+    });
+  },
+}));
+
+export { useLogin, useSignin, useApplications };
