@@ -1,7 +1,14 @@
 import React from "react";
+import { useSignin } from "../../hooks/store";
 
 const SignUpForm = () => {
-  return <div>SignUpForm</div>;
+  const chooseRol = useSignin((state) => state.chooseRol);
+
+  return (
+    <div>
+      <form></form>
+    </div>
+  );
 };
 
 export { SignUpForm };

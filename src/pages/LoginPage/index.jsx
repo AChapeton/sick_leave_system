@@ -2,12 +2,13 @@ import React from "react";
 import { useLogin } from "../../hooks/store";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useContentful } from "../../useContentful";
-import { NavLink, Link } from "react-router-dom";
-import { SignUpAsPage } from "../SignUpAsPage";
+// import { useContentful } from "../../useContentful";
+import { login } from "../../useContentful";
+import { NavLink } from "react-router-dom";
 
 const LoginPage = () => {
-  const { getAllUsers } = useContentful();
+  // const { getAllUsers } = useContentful();
+  // const { login } = useContentful();
   const saveLoggedUser = useLogin((state) => state.saveLoggedUser);
   const navigate = useNavigate();
 
@@ -19,28 +20,17 @@ const LoginPage = () => {
   } = useForm();
 
   const onSubmit = async (userData) => {
-    const users = await getAllUsers();
-    // console.log(users.items);
-    // console.log(users.items[0].fields.username);
-    // const validUser = users.items.fields.some((user) =>
-    //   // user.username === userData.username &&
-    //   // user.password === userData.password
-    //   console.log(user)
-    // );
-    const validUser = users.items.find(
-      (user) =>
-        user.fields.username === userData.username &&
-        user.fields.password === userData.password
-    );
-    console.log(validUser);
+    // const users = await getAllUsers();
+    const user = await login(userData.username, userData.password);
+    console.log(user);
     reset();
-    validateUser(validUser);
+    validateUser(user);
   };
 
-  const validateUser = (validUser) => {
-    if (validUser) {
+  const validateUser = (user) => {
+    if (user.length > 0) {
       console.log("Welcome");
-      saveLoggedUser(validUser);
+      saveLoggedUser(user);
       navigate("/home");
     } else {
       console.log("Keep trying");
@@ -71,7 +61,7 @@ const LoginPage = () => {
         <button>Log in</button>
       </form>
       <p>
-        Don't have an account? <Link to="/register_as">Sign in</Link>
+        Don't have an account? <NavLink to="/register_as">Sign in</NavLink>
       </p>
     </div>
   );

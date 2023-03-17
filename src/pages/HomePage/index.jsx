@@ -5,7 +5,7 @@ const HomePage = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   return (
     <div>
-      <p>{loggedUser.fields.username}</p>
+      <p>{loggedUser[0].username}</p>
     </div>
   );
 };

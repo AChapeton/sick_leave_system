@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 const useLogin = create((set) => ({
-  loggedUser: {},
+  loggedUser: [],
   saveLoggedUser: (user) => {
     set((state) => {
       console.log("User zustand: ", user);
-      return { loggedUser: user };
+      return { loggedUser: [...user] };
     });
   },
 }));
@@ -15,8 +15,9 @@ const useSignin = create((set) => ({
   setRole: (role) => {
     set((state) => {
       console.log(role);
+      return { chooseRol: role };
     });
   },
 }));
 
-export { useLogin };
+export { useLogin, useSignin };
