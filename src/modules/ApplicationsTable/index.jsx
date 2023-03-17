@@ -106,6 +106,7 @@ const ApplicationsTable = () => {
           loggedUser[0].role === "employee" ? columnsEmployee : columnsHR
         }
         data={applications}
+        pagination
       />
     </div>
   );
