@@ -98,9 +98,7 @@ const ApplicationsTable = () => {
   }, []);
 
   return (
-    <div>
-      ApplicationsTable
-      {/* <p>{console.log(loggedUser)}</p> */}
+    <>
       <DataTable
         columns={
           loggedUser[0].role === "employee" ? columnsEmployee : columnsHR
@@ -108,7 +106,7 @@ const ApplicationsTable = () => {
         data={applications}
         pagination
       />
-    </div>
+    </>
   );
 };
 
