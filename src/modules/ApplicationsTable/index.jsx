@@ -27,10 +27,22 @@ const ApplicationsTable = () => {
 
   //Probar pasar todos
   // Buscar como ignorar name para employee
-  const columns = [
+  const columnsHR = [
+    {
+      name: "Employee",
+      selector: (row) => row.employee.fullName,
+    },
     {
       name: "Medical diagnostic",
       selector: (row) => row.medicalDiagnostic,
+    },
+    {
+      name: "Application date",
+      selector: (row) => row.startDate,
+    },
+    {
+      name: "Medical unit",
+      selector: (row) => row.medicalUnit,
     },
     {
       name: "Doctor",
@@ -39,6 +51,45 @@ const ApplicationsTable = () => {
     {
       name: "Days of coverage",
       selector: (row) => row.coverageDays,
+    },
+    {
+      name: "Start date",
+      selector: (row) => row.startDate,
+    },
+    {
+      name: "End date",
+      selector: (row) => row.endDate,
+    },
+  ];
+
+  const columnsEmployee = [
+    {
+      name: "Medical diagnostic",
+      selector: (row) => row.medicalDiagnostic,
+    },
+    {
+      name: "Application date",
+      selector: (row) => row.startDate,
+    },
+    {
+      name: "Medical unit",
+      selector: (row) => row.medicalUnit,
+    },
+    {
+      name: "Doctor",
+      selector: (row) => row.doctorName,
+    },
+    {
+      name: "Days of coverage",
+      selector: (row) => row.coverageDays,
+    },
+    {
+      name: "Start date",
+      selector: (row) => row.startDate,
+    },
+    {
+      name: "End date",
+      selector: (row) => row.endDate,
     },
   ];
 
@@ -49,8 +100,13 @@ const ApplicationsTable = () => {
   return (
     <div>
       ApplicationsTable
-      <p>{console.log(loggedUser)}</p>
-      <DataTable columns={columns} data={applications} />
+      {/* <p>{console.log(loggedUser)}</p> */}
+      <DataTable
+        columns={
+          loggedUser[0].role === "employee" ? columnsEmployee : columnsHR
+        }
+        data={applications}
+      />
     </div>
   );
 };
