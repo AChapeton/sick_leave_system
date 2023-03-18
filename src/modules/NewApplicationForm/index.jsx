@@ -51,6 +51,23 @@ const NewApplicationForm = () => {
       </div>
       <div>
         <label>Medical unit</label>
+        <select
+          name="medicalUnit"
+          id="medicalUnit"
+          {...register("medicalUnit", { required: true })}
+        >
+          <option value="" disabled>
+            Select option
+          </option>
+          <option value="isss">ISSS</option>
+          <option value="minsal">MINSAL</option>
+        </select>
+        {errors.medicalUnit?.type === "required" && (
+          <p>Medical unit is required</p>
+        )}
+      </div>
+      {/* <div>
+        <label>Medical unit</label>
         <input
           type="text"
           name="medicalUnit"
@@ -60,7 +77,7 @@ const NewApplicationForm = () => {
         {errors.medicalUnit?.type === "required" && (
           <p>Medical unit is required</p>
         )}
-      </div>
+      </div> */}
       <div>
         <label>Doctor</label>
         <input
