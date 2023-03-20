@@ -23,23 +23,6 @@ const startEnvironment = async () => {
   environment = newEnvironment;
 };
 
-// client
-//   .getSpace(SPACE_ID)
-//   .then((space) => console.log(space))
-//   .catch(console.error);
-
-// const getAllUsers = async () => {
-//   try {
-//     const users = await client.getEntries({
-//       content_type: "user",
-//       select: "fields",
-//     });
-//     return users;
-//   } catch (error) {
-//     console.log("Error fetching users: ", error);
-//   }
-// };
-
 const login = async (username, password) => {
   return await client
     .getSpace(SPACE_ID)
@@ -93,12 +76,14 @@ const getApplicationsByUser = async (user) => {
 };
 
 const createApplication = async (applicationData) => {
-  return await client
+  const newApplication = await client
     .getSpace(SPACE_ID)
     .then((space) => space.getEnvironment(ENVIRONMENT))
     .then((environment) =>
       environment.createEntry("application", applicationData)
     );
+  await newApplication.publish();
+  return newApplication;
 };
 
 const arrayFetchTransformer = (data) =>
