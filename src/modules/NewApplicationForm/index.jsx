@@ -67,9 +67,9 @@ const NewApplicationForm = () => {
           },
         });
       } else {
-        applicationData.employeeId = loggedUser[0].employee.employeeId;
+        applicationData.employeeId = loggedUser[0].employee.sysId;
         console.log(applicationData);
-        // console.log(v4());
+        console.log(v4());
         await createApplication({
           fields: {
             applicationId: { [DEFAULT_LNG]: v4() },
@@ -78,7 +78,7 @@ const NewApplicationForm = () => {
                 sys: {
                   type: "Link",
                   linkType: "Entry",
-                  id: applicationData.employee.sysId,
+                  id: applicationData.employeeId,
                 },
               },
             },
