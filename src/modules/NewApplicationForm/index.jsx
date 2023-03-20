@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { useLogin, useApplications } from "../../hooks/store";
+import { createApplication } from "../../useContentful";
+import { v4 } from "uuid";
+const DEFAULT_LNG = "en-US";
 
 const NewApplicationForm = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
@@ -33,15 +36,68 @@ const NewApplicationForm = () => {
 
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
-      let newApplicationData = {};
-      newApplicationData = applicationData;
-      newApplicationData.applicationId = Math.random();
+      const newStartDate = new Date(applicationData.startDate);
+      const newEndDate = new Date(applicationData.endDate);
       if (loggedUser[0].role === "hr_specialist") {
         console.log(applicationData);
+        await createApplication({
+          fields: {
+            applicationId: { [DEFAULT_LNG]: v4() },
+            employeeId: {
+              [DEFAULT_LNG]: {
+                sys: {
+                  type: "Link",
+                  linkType: "Entry",
+                  id: applicationData.sysId,
+                },
+              },
+            },
+            medicalUnit: { [DEFAULT_LNG]: applicationData.medicalUnit },
+            startDate: { [DEFAULT_LNG]: newStartDate },
+            endDate: { [DEFAULT_LNG]: newEndDate },
+            doctorName: { [DEFAULT_LNG]: applicationData.doctorName },
+            medicalDiagnostic: {
+              [DEFAULT_LNG]: applicationData.medicalDiagnostic,
+            },
+            coverageDays: {
+              [DEFAULT_LNG]: (applicationData.coverageDays = parseInt(
+                applicationData.coverageDays
+              )),
+            },
+          },
+        });
       } else {
-        newApplicationData.employeeId = loggedUser[0].employee.employeeId;
-        console.log(newApplicationData);
+        applicationData.employeeId = loggedUser[0].employee.employeeId;
+        console.log(applicationData);
+        // console.log(v4());
+        await createApplication({
+          fields: {
+            applicationId: { [DEFAULT_LNG]: v4() },
+            employeeId: {
+              [DEFAULT_LNG]: {
+                sys: {
+                  type: "Link",
+                  linkType: "Entry",
+                  id: applicationData.employee.sysId,
+                },
+              },
+            },
+            medicalUnit: { [DEFAULT_LNG]: applicationData.medicalUnit },
+            startDate: { [DEFAULT_LNG]: newStartDate },
+            endDate: { [DEFAULT_LNG]: newEndDate },
+            doctorName: { [DEFAULT_LNG]: applicationData.doctorName },
+            medicalDiagnostic: {
+              [DEFAULT_LNG]: applicationData.medicalDiagnostic,
+            },
+            coverageDays: {
+              [DEFAULT_LNG]: (applicationData.coverageDays = parseInt(
+                applicationData.coverageDays
+              )),
+            },
+          },
+        });
       }
+      // await createApplication(newApplicationData);
     };
   }
 
@@ -62,22 +118,22 @@ const NewApplicationForm = () => {
         <div>
           <label>Employee</label>
           <select
-            name="employeeId"
-            id="employeeId"
-            {...register("employeeId", { required: true })}
+            name="sysId"
+            id="sysId"
+            {...register("sysId", { required: true })}
           >
             {uniqueEmployees.map((employee) => {
               {
                 // console.log("test", employee);
               }
               return (
-                <option key={employee.employeeId} value={employee.employeeId}>
+                <option key={employee.sysId} value={employee.sysId}>
                   {employee.fullName}
                 </option>
               );
             })}
           </select>
-          {errors.employeeId?.type === "required" && (
+          {errors.sysId?.type === "required" && (
             <p>Employee's name is required</p>
           )}
         </div>

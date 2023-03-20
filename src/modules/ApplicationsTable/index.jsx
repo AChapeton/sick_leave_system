@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 const ApplicationsTable = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const applications = useApplications((state) => state.applications);
+  console.log(applications);
   const setApplications = useApplications((state) => state.setApplications);
 
   // Si applications esta vacio, que aparezca el mensaje de que no hay aplicaciones aun

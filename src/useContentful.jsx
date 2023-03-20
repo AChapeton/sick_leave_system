@@ -92,12 +92,13 @@ const getApplicationsByUser = async (user) => {
     );
 };
 
-const createApplication = async (application) => {
-  const newEntry = await environment.createEntry("employee", data);
-
-  await newEntry.publish();
-
-  return newEntry;
+const createApplication = async (applicationData) => {
+  return await client
+    .getSpace(SPACE_ID)
+    .then((space) => space.getEnvironment(ENVIRONMENT))
+    .then((environment) =>
+      environment.createEntry("application", applicationData)
+    );
 };
 
 const arrayFetchTransformer = (data) =>
