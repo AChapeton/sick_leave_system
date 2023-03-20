@@ -33,12 +33,14 @@ const NewApplicationForm = () => {
 
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
+      let newApplicationData = {};
+      newApplicationData = applicationData;
+      newApplicationData.applicationId = Math.random();
       if (loggedUser[0].role === "hr_specialist") {
         console.log(applicationData);
       } else {
-        const newAppData = applicationData;
-        newAppData.employeeId = loggedUser[0].employee.employeeId;
-        console.log(newAppData);
+        newApplicationData.employeeId = loggedUser[0].employee.employeeId;
+        console.log(newApplicationData);
       }
     };
   }
