@@ -37,7 +37,7 @@ const NewApplicationForm = () => {
         console.log(applicationData);
       } else {
         const newAppData = applicationData;
-        newAppData.employeeName = loggedUser[0].employee.fullName;
+        newAppData.employeeId = loggedUser[0].employee.employeeId;
         console.log(newAppData);
       }
     };
