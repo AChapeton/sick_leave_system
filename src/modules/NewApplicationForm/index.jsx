@@ -1,12 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { differenceInCalendarDays, parseISO } from "date-fns";
-import { useLogin } from "../../hooks/store";
+import { useLogin, useApplications } from "../../hooks/store";
 
 const NewApplicationForm = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
+  const applications = useApplications((state) => state.applications);
   const [days, setDays] = useState(0);
   let onSubmit = () => {};
+
+  const applicationEmployee = applications.map((app) => app.employee);
+
+  // console.log("new app", applicationEmployee);
+
+  let appMap = applicationEmployee.map((employee) => {
+    return [JSON.stringify(employee), employee];
+  });
+
+  let appMapArr = new Map(appMap);
+
+  let uniqueEmployees = [...appMapArr.values()];
+
+  // console.log("unique", uniqueEmployees);
 
   const {
     register,
@@ -23,7 +38,7 @@ const NewApplicationForm = () => {
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
       if (loggedUser[0].role === "hr_specialist") {
-        console.log(applicationData);
+        // console.log(applicationData);
       } else {
         const newAppData = applicationData;
         newAppData.employeeName = loggedUser[0].employee.fullName;
@@ -33,28 +48,37 @@ const NewApplicationForm = () => {
   }
 
   useEffect(() => {
-    console.log(startDateWatched, endDateWatched);
+    // console.log(startDateWatched, endDateWatched);
     const days = differenceInCalendarDays(
       parseISO(...endDateWatched),
       parseISO(...startDateWatched)
     );
-    console.log("days", days);
-    console.log("cover", ...coverageDaysWatched);
+    // console.log("days", days);
+    // console.log("cover", ...coverageDaysWatched);
     setDays(days);
   }, [startDateWatched, endDateWatched]);
-  console.log("login", loggedUser);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {loggedUser[0].role === "hr_specialist" ? (
         <div>
           <label>Employee</label>
-          <input
-            type="text"
+          <select
             name="employeeName"
             id="employeeName"
             {...register("employeeName", { required: true })}
-          />
+          >
+            {uniqueEmployees.map((employee) => {
+              {
+                // console.log("test", employee);
+              }
+              return (
+                <option key={employee.employeeId} value={employee.fullName}>
+                  {employee.fullName}
+                </option>
+              );
+            })}
+          </select>
           {errors.employeeName?.type === "required" && (
             <p>Employee's name is required</p>
           )}
