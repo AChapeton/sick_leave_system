@@ -11,8 +11,6 @@ const NewApplicationForm = () => {
 
   const applicationEmployee = applications.map((app) => app.employee);
 
-  // console.log("new app", applicationEmployee);
-
   let appMap = applicationEmployee.map((employee) => {
     return [JSON.stringify(employee), employee];
   });
@@ -20,8 +18,6 @@ const NewApplicationForm = () => {
   let appMapArr = new Map(appMap);
 
   let uniqueEmployees = [...appMapArr.values()];
-
-  // console.log("unique", uniqueEmployees);
 
   const {
     register,
@@ -38,7 +34,7 @@ const NewApplicationForm = () => {
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
       if (loggedUser[0].role === "hr_specialist") {
-        // console.log(applicationData);
+        console.log(applicationData);
       } else {
         const newAppData = applicationData;
         newAppData.employeeName = loggedUser[0].employee.fullName;
@@ -64,22 +60,22 @@ const NewApplicationForm = () => {
         <div>
           <label>Employee</label>
           <select
-            name="employeeName"
-            id="employeeName"
-            {...register("employeeName", { required: true })}
+            name="employeeId"
+            id="employeeId"
+            {...register("employeeId", { required: true })}
           >
             {uniqueEmployees.map((employee) => {
               {
                 // console.log("test", employee);
               }
               return (
-                <option key={employee.employeeId} value={employee.fullName}>
+                <option key={employee.employeeId} value={employee.employeeId}>
                   {employee.fullName}
                 </option>
               );
             })}
           </select>
-          {errors.employeeName?.type === "required" && (
+          {errors.employeeId?.type === "required" && (
             <p>Employee's name is required</p>
           )}
         </div>
