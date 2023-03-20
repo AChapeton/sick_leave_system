@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { differenceInCalendarDays, parseISO } from "date-fns";
+import { useLogin } from "../../hooks/store";
 
 const NewApplicationForm = () => {
+  const loggedUser = useLogin((state) => state.loggedUser);
   const [days, setDays] = useState(0);
   let onSubmit = () => {};
 
@@ -20,7 +22,13 @@ const NewApplicationForm = () => {
 
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
-      console.log(applicationData);
+      if (loggedUser[0].role === "hr_specialist") {
+        console.log(applicationData);
+      } else {
+        const newAppData = applicationData;
+        newAppData.employeeName = loggedUser[0].employee.fullName;
+        console.log(newAppData);
+      }
     };
   }
 
@@ -34,21 +42,24 @@ const NewApplicationForm = () => {
     console.log("cover", ...coverageDaysWatched);
     setDays(days);
   }, [startDateWatched, endDateWatched]);
+  console.log("login", loggedUser);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Employee</label>
-        <input
-          type="text"
-          name="employeeName"
-          id="employeeName"
-          {...register("employeeName", { required: true })}
-        />
-        {errors.employeeName?.type === "required" && (
-          <p>Employee's name is required</p>
-        )}
-      </div>
+      {loggedUser[0].role === "hr_specialist" ? (
+        <div>
+          <label>Employee</label>
+          <input
+            type="text"
+            name="employeeName"
+            id="employeeName"
+            {...register("employeeName", { required: true })}
+          />
+          {errors.employeeName?.type === "required" && (
+            <p>Employee's name is required</p>
+          )}
+        </div>
+      ) : null}
       <div>
         <label>Medical unit</label>
         <select
