@@ -92,6 +92,14 @@ const getApplicationsByUser = async (user) => {
     );
 };
 
+// const createApplication = async (application) => {
+//   const newEntry = await environment.createEntry("employee", data);
+
+//   await newEntry.publish();
+
+//   return newEntry;
+// };
+
 const arrayFetchTransformer = (data) =>
   data.map((item) =>
     Object.keys(item.fields).reduce(

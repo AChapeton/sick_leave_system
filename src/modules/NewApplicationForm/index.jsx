@@ -66,18 +66,6 @@ const NewApplicationForm = () => {
           <p>Medical unit is required</p>
         )}
       </div>
-      {/* <div>
-        <label>Medical unit</label>
-        <input
-          type="text"
-          name="medicalUnit"
-          id="medicalUnit"
-          {...register("medicalUnit", { required: true })}
-        />
-        {errors.medicalUnit?.type === "required" && (
-          <p>Medical unit is required</p>
-        )}
-      </div> */}
       <div>
         <label>Doctor</label>
         <input

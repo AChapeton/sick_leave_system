@@ -25,6 +25,10 @@ const ApplicationsTable = () => {
     console.log("apps", applications);
   };
 
+  const handleDelete = (row) => {
+    console.log(row);
+  };
+
   //Probar pasar todos
   // Buscar como ignorar name para employee
   const columnsHR = [
@@ -60,6 +64,12 @@ const ApplicationsTable = () => {
       name: "End date",
       selector: (row) => row.endDate,
     },
+    {
+      name: "Actions",
+      selector: (row) => (
+        <button onClick={() => handleDelete(row)}>Delete</button>
+      ),
+    },
   ];
 
   const columnsEmployee = [
@@ -91,6 +101,12 @@ const ApplicationsTable = () => {
       name: "End date",
       selector: (row) => row.endDate,
     },
+    {
+      name: "Actions",
+      selector: (row) => (
+        <button onClick={() => handleDelete(row)}>Delete</button>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -104,6 +120,9 @@ const ApplicationsTable = () => {
           loggedUser[0].role === "employee" ? columnsEmployee : columnsHR
         }
         data={applications}
+        // actions={[
+        //   { icon: "delete", tooltip: "Eliminar aplicacion", onClick: () => {} },
+        // ]}
         pagination
       />
     </>
