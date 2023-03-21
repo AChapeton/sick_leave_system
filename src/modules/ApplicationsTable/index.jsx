@@ -1,47 +1,66 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLogin, useApplications } from "../../hooks/store";
-import { getApplicationsByUser } from "../../useContentful";
+import { useFetchUserApps } from "../../hooks/useObtainUserApps";
 import { deleteApplication } from "../../useContentful";
 import DataTable from "react-data-table-component";
 import { parse, format } from "date-fns";
 
 const ApplicationsTable = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
+  const { data, isLoading, isError } = useFetchUserApps(loggedUser);
   const applications = useApplications((state) => state.applications);
   const setApplications = useApplications((state) => state.setApplications);
 
-  const formattedApplications = applications.map((app) => {
-    app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
-    app.endDate = format(new Date(app.endDate), "MM/dd/yyyy");
-  });
+  // let currentUserApps = [];
+  const [currentUserApps, setCurrentUserApps] = useState([]);
+  const [search, setSearch] = useState([]);
 
-  const onObtainUserApps = async () => {
-    const apps = await getApplicationsByUser(loggedUser);
-    let currentUserApps = [];
-    if (loggedUser[0].employee.employeeId === 1) {
-      currentUserApps = apps.filter(
-        (app) => app.employee.employeeId === loggedUser[0].employee.employeeId
-      );
+  // const formattedApplications = applications.map((app) => {
+  //   app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
+  //   app.endDate = format(new Date(app.endDate), "MM/dd/yyyy");
+  // });
+
+  // useEffect(() => {
+  //   onObtainUserApps();
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("Something changed");
+  //   onObtainUserApps();
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("data", data);
+  // }, [data]);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+
+  console.log("data", data);
+
+  const handleSearch = (e) => {
+    if (e.target.value) {
+      const searchApps = currentUserApps.filter((app) => {
+        return (
+          app.doctorName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          app.medicalUnit
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          app.employee.fullName
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+        );
+      });
+      setSearch(searchApps);
     } else {
-      currentUserApps = apps;
+      setSearch(currentUserApps);
     }
-    setApplications(currentUserApps);
-    // console.log(currentUserApps);
-    console.log("apps", applications);
   };
 
   const handleDelete = (row) => {
     console.log(row);
     deleteApplication(row.sysId);
-    onObtainUserApps();
   };
 
-  // useEffect(() => {
-  // onObtainUserApps();
-  // }, [applications]);
-
-  //Probar pasar todos
-  // Buscar como ignorar name para employee
   const columnsHR = [
     {
       name: "Employee",
@@ -120,20 +139,19 @@ const ApplicationsTable = () => {
     },
   ];
 
-  useEffect(() => {
-    onObtainUserApps();
-  }, []);
-
   return (
     <>
+      <input
+        type="text"
+        name="searchValue"
+        id="searchValue"
+        onChange={handleSearch}
+      />
       <DataTable
         columns={
           loggedUser[0].role === "employee" ? columnsEmployee : columnsHR
         }
-        data={applications}
-        // actions={[
-        //   { icon: "delete", tooltip: "Eliminar aplicacion", onClick: () => {} },
-        // ]}
+        data={search}
         pagination
       />
     </>
