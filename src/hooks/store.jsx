@@ -1,18 +1,24 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useLogin = create((set) => ({
-  loggedUser: [],
-  saveLoggedUser: (user) => {
-    set((state) => {
-      return { loggedUser: [...user] };
-    });
-  },
-  loggedOut: () => {
-    set((state) => {
-      return { loggedUser: [] };
-    });
-  },
-}));
+const useLogin = create(
+  persist(
+    (set) => ({
+      loggedUser: [],
+      saveLoggedUser: (user) => {
+        set((state) => {
+          return { loggedUser: [...user] };
+        });
+      },
+      loggedOut: () => {
+        set((state) => {
+          return { loggedUser: [] };
+        });
+      },
+    }),
+    { name: "LOGGED_DATA_V1" }
+  )
+);
 
 const useSignin = create((set) => ({
   chooseRol: "",

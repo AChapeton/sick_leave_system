@@ -20,7 +20,8 @@
     "styled-components": "^5.3.9",
     "uuid": "^9.0.0",
     "uuidv4": "^6.2.13",
-    "zustand": "^4.3.6"
+    "zustand": "^4.3.6",
+    "zustand-middleware-computed-state": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
