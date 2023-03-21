@@ -1,5 +1,3 @@
-// import { createClient } from "contentful";
-// import contentful from "contentful-management";
 import { createClient } from "contentful-management";
 import { create } from "zustand";
 
@@ -9,9 +7,7 @@ const ACCESS_TOKEN = "CFPAT-Ci_G875FAGKlt5pxQETLsvLB8KBB9Ym8NQkFH_AuBkI";
 const DEFAULT_LNG = "en-US";
 
 const client = createClient({
-  // space: SPACE_ID,
   accessToken: ACCESS_TOKEN,
-  // host: "cdn.contentful.com",
 });
 
 let environment = null;
@@ -59,9 +55,6 @@ const getAllEmployees = async () => {
       })
     )
     .then((response) => {
-      // console.log("use", response.items);
-      // return response.items;
-      // return response.items.map((item) => arrayFetchTransformer(item));
       return arrayFetchTransformer(response.items);
     });
 };

@@ -102,7 +102,7 @@ const NewApplicationForm = () => {
           },
         });
       }
-      navigate(-1);
+      navigate("/home");
     };
   }
 

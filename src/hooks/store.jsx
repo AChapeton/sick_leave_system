@@ -7,6 +7,11 @@ const useLogin = create((set) => ({
       return { loggedUser: [...user] };
     });
   },
+  loggedOut: () => {
+    set((state) => {
+      return { loggedUser: [] };
+    });
+  },
 }));
 
 const useSignin = create((set) => ({
