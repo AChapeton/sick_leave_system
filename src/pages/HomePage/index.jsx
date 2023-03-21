@@ -12,7 +12,7 @@ const HomePage = () => {
     loggedOut();
     navigate("/");
   };
-
+  console.log("logged", loggedUser);
   return (
     <div>
       <p>{loggedUser[0].username}</p>
