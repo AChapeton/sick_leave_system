@@ -14,11 +14,14 @@ const NewApplicationForm = () => {
   const [days, setDays] = useState(0);
 
   let onSubmit = () => {};
-  const getEmployees = async () => {
-    const allEmployees = await getAllEmployees();
-    setEmployees(allEmployees);
-    console.log("employees", employees);
-  };
+  let getEmployees = () => {};
+
+  if (loggedUser[0].role === "hr_specialist") {
+    getEmployees = async () => {
+      const allEmployees = await getAllEmployees();
+      setEmployees(allEmployees);
+    };
+  }
 
   useEffect(() => {
     getEmployees();
