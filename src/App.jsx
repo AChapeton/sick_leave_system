@@ -11,30 +11,9 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/new_application"
-            element={
-              <ProtectedRoute>
-                <NewApplicationPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/new_application" element={<NewApplicationPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<p>Not Found</p>} />
         </Routes>
       </HashRouter>

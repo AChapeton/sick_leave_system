@@ -15,8 +15,8 @@ const HomePage = () => {
   console.log("logged", loggedUser);
   return (
     <div>
-      <p>{loggedUser[0].username}</p>
-      <button onClick={onHandleLogout}>Log Out</button>
+      <NavLink to="/profile">{loggedUser[0].username}</NavLink>
+      <button onClick={() => onHandleLogout}>Log Out</button>
       <NavLink to="/new_application">New application</NavLink>
       <ApplicationsTable />
     </div>
