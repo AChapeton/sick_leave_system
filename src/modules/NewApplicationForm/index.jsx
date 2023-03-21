@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { useLogin, useApplications } from "../../hooks/store";
@@ -7,6 +8,7 @@ import { v4 } from "uuid";
 const DEFAULT_LNG = "en-US";
 
 const NewApplicationForm = () => {
+  const navigate = useNavigate();
   const loggedUser = useLogin((state) => state.loggedUser);
   const applications = useApplications((state) => state.applications);
   const [days, setDays] = useState(0);
@@ -97,7 +99,7 @@ const NewApplicationForm = () => {
           },
         });
       }
-      // await createApplication(newApplicationData);
+      navigate(-1);
     };
   }
 
