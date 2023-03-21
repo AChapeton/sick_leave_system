@@ -35,7 +35,6 @@ const login = async (username, password) => {
       })
     )
     .then((response) => {
-      // console.log("Logged", response);
       const transformedUser = arrayFetchTransformer(response.items);
       const transformedEmployee = arrayFetchTransformer(
         response.includes.Entry
@@ -47,6 +46,23 @@ const login = async (username, password) => {
           ({ sysId }) => sysId === user.employeeId.sys.id
         ),
       }));
+    });
+};
+
+const getAllEmployees = async () => {
+  return await client
+    .getSpace(SPACE_ID)
+    .then((space) => space.getEnvironment(ENVIRONMENT))
+    .then((environment) =>
+      environment.getPublishedEntries({
+        content_type: "employee",
+      })
+    )
+    .then((response) => {
+      // console.log("use", response.items);
+      // return response.items;
+      // return response.items.map((item) => arrayFetchTransformer(item));
+      return arrayFetchTransformer(response.items);
     });
 };
 
@@ -86,6 +102,25 @@ const createApplication = async (applicationData) => {
   return newApplication;
 };
 
+const deleteApplication = async (sysId) => {
+  try {
+    // console.log(sysId);
+    const application = await client
+      .getSpace(SPACE_ID)
+      .then((space) => space.getEnvironment(ENVIRONMENT))
+      .then((environment) => environment.getEntry(sysId));
+
+    await application.unpublish();
+    await application.delete();
+
+    return application;
+  } catch (err) {
+    console.error("Error deleting application", err);
+
+    return null;
+  }
+};
+
 const arrayFetchTransformer = (data) =>
   data.map((item) =>
     Object.keys(item.fields).reduce(
@@ -97,4 +132,10 @@ const arrayFetchTransformer = (data) =>
     )
   );
 
-export { login, getApplicationsByUser, createApplication };
+export {
+  login,
+  getAllEmployees,
+  getApplicationsByUser,
+  createApplication,
+  deleteApplication,
+};

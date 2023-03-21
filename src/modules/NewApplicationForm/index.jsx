@@ -3,26 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { useLogin, useApplications } from "../../hooks/store";
-import { createApplication } from "../../useContentful";
+import { createApplication, getAllEmployees } from "../../useContentful";
 import { v4 } from "uuid";
 const DEFAULT_LNG = "en-US";
 
 const NewApplicationForm = () => {
   const navigate = useNavigate();
   const loggedUser = useLogin((state) => state.loggedUser);
-  const applications = useApplications((state) => state.applications);
+  const [employees, setEmployees] = useState([]);
   const [days, setDays] = useState(0);
+
   let onSubmit = () => {};
+  const getEmployees = async () => {
+    const allEmployees = await getAllEmployees();
+    setEmployees(allEmployees);
+    console.log("employees", employees);
+  };
 
-  const applicationEmployee = applications.map((app) => app.employee);
-
-  let appMap = applicationEmployee.map((employee) => {
-    return [JSON.stringify(employee), employee];
-  });
-
-  let appMapArr = new Map(appMap);
-
-  let uniqueEmployees = [...appMapArr.values()];
+  useEffect(() => {
+    getEmployees();
+  }, []);
 
   const {
     register,
@@ -104,13 +104,10 @@ const NewApplicationForm = () => {
   }
 
   useEffect(() => {
-    // console.log(startDateWatched, endDateWatched);
     const days = differenceInCalendarDays(
       parseISO(...endDateWatched),
       parseISO(...startDateWatched)
     );
-    // console.log("days", days);
-    // console.log("cover", ...coverageDaysWatched);
     setDays(days);
   }, [startDateWatched, endDateWatched]);
 
@@ -124,7 +121,7 @@ const NewApplicationForm = () => {
             id="sysId"
             {...register("sysId", { required: true })}
           >
-            {uniqueEmployees.map((employee) => {
+            {employees.map((employee) => {
               {
                 // console.log("test", employee);
               }

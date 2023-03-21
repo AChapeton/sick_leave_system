@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLogin, useApplications } from "../../hooks/store";
 import { getApplicationsByUser } from "../../useContentful";
+import { deleteApplication } from "../../useContentful";
 import DataTable from "react-data-table-component";
 
 const ApplicationsTable = () => {
@@ -28,7 +29,12 @@ const ApplicationsTable = () => {
 
   const handleDelete = (row) => {
     console.log(row);
+    deleteApplication(row.sysId);
   };
+
+  useEffect(() => {
+    // onObtainUserApps();
+  }, [handleDelete]);
 
   //Probar pasar todos
   // Buscar como ignorar name para employee

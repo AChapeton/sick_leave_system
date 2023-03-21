@@ -21,6 +21,7 @@ const LoginPage = () => {
 
   const onSubmit = async (userData) => {
     const user = await login(userData.username, userData.password);
+    // console.log(user);
     reset();
     validateUser(user);
   };
