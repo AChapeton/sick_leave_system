@@ -3,14 +3,17 @@ import { useLogin, useApplications } from "../../hooks/store";
 import { getApplicationsByUser } from "../../useContentful";
 import { deleteApplication } from "../../useContentful";
 import DataTable from "react-data-table-component";
+import { parse, format } from "date-fns";
 
 const ApplicationsTable = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const applications = useApplications((state) => state.applications);
-  console.log(applications);
   const setApplications = useApplications((state) => state.setApplications);
 
-  // Si applications esta vacio, que aparezca el mensaje de que no hay aplicaciones aun
+  const formattedApplications = applications.map((app) => {
+    app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
+    app.endDate = format(new Date(app.endDate), "MM/dd/yyyy");
+  });
 
   const onObtainUserApps = async () => {
     const apps = await getApplicationsByUser(loggedUser);
@@ -30,11 +33,12 @@ const ApplicationsTable = () => {
   const handleDelete = (row) => {
     console.log(row);
     deleteApplication(row.sysId);
+    onObtainUserApps();
   };
 
-  useEffect(() => {
-    // onObtainUserApps();
-  }, [handleDelete]);
+  // useEffect(() => {
+  // onObtainUserApps();
+  // }, [applications]);
 
   //Probar pasar todos
   // Buscar como ignorar name para employee
