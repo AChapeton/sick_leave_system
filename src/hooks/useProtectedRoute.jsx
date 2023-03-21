@@ -1,5 +1,5 @@
 import { useLogin } from "./store";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   const loggedUser = useLogin((state) => state.loggedUser);
@@ -7,6 +7,8 @@ const ProtectedRoute = ({ children }) => {
   if (!loggedUser) {
     return <Navigate to="/login" />;
   }
+
+  return children;
 };
 
 export { ProtectedRoute };

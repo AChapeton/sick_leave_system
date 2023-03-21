@@ -1,6 +1,6 @@
 import React from "react";
 import { useLogin } from "../../hooks/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const ProfilePage = () => {
         <span>{loggedUser[0].userId}</span>
       </div>
       <div>
-        <button onClick={() => onHandleLogout}>Log Out</button>
+        <button onClick={onHandleLogout}>Log Out</button>
       </div>
     </div>
   );

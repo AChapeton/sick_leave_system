@@ -1,16 +1,17 @@
 import React from "react";
 import { useLogin } from "../../hooks/store";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 // import { useContentful } from "../../useContentful";
 import { login } from "../../useContentful";
 import { NavLink } from "react-router-dom";
 
 const LoginPage = () => {
-  // const { getAllUsers } = useContentful();
-  // const { login } = useContentful();
   const saveLoggedUser = useLogin((state) => state.saveLoggedUser);
+  const loggedUser = useLogin((state) => state.loggedUser);
   const navigate = useNavigate();
+
+  console.log(loggedUser);
 
   const {
     register,
@@ -21,21 +22,21 @@ const LoginPage = () => {
 
   const onSubmit = async (userData) => {
     const user = await login(userData.username, userData.password);
-    // console.log(user);
-    reset();
-    validateUser(user);
-  };
-
-  const validateUser = (user) => {
-    if (user.length > 0) {
+    if (user) {
       console.log("Welcome");
       console.log("Loggued User", user);
       saveLoggedUser(user);
       navigate("/home");
+      // <Navigate to="/home" />;
     } else {
       console.log("Keep trying");
+      reset();
     }
   };
+
+  // if (loggedUser) {
+  //   return <Navigate to="/home" />;
+  // }
 
   return (
     <div>

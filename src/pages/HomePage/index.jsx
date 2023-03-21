@@ -12,11 +12,11 @@ const HomePage = () => {
     loggedOut();
     navigate("/");
   };
-  console.log("logged", loggedUser);
+
   return (
     <div>
       <NavLink to="/profile">{loggedUser[0].username}</NavLink>
-      <button onClick={() => onHandleLogout}>Log Out</button>
+      <button onClick={onHandleLogout}>Log Out</button>
       <NavLink to="/new_application">New application</NavLink>
       <ApplicationsTable />
     </div>
