@@ -1,24 +1,17 @@
 import { createClient } from "contentful-management";
-import { create } from "zustand";
 
+//CONTENTFUL variables
 const ENVIRONMENT = "master";
 const SPACE_ID = "5cx8i8w9ige3";
 const ACCESS_TOKEN = "CFPAT-Ci_G875FAGKlt5pxQETLsvLB8KBB9Ym8NQkFH_AuBkI";
 const DEFAULT_LNG = "en-US";
 
+//Create cliente
 const client = createClient({
   accessToken: ACCESS_TOKEN,
 });
 
-let environment = null;
-
-const startEnvironment = async () => {
-  const space = await client.getSpace(SPACE_ID);
-  const newEnvironment = await space.getEnvironment(ENVIRONMENT);
-
-  environment = newEnvironment;
-};
-
+//Login - Receives an array that contains user's data
 const login = async (username, password) => {
   return await client
     .getSpace(SPACE_ID)
@@ -45,6 +38,7 @@ const login = async (username, password) => {
     });
 };
 
+//Get all employees
 const getAllEmployees = async () => {
   return await client
     .getSpace(SPACE_ID)
@@ -59,6 +53,7 @@ const getAllEmployees = async () => {
     });
 };
 
+//Get application by user
 const getApplicationsByUser = async (user) => {
   return await client
     .getSpace(SPACE_ID)
@@ -84,6 +79,7 @@ const getApplicationsByUser = async (user) => {
     );
 };
 
+//Create new application
 const createApplication = async (applicationData) => {
   const newApplication = await client
     .getSpace(SPACE_ID)
@@ -95,9 +91,9 @@ const createApplication = async (applicationData) => {
   return newApplication;
 };
 
+//Delete application
 const deleteApplication = async (sysId) => {
   try {
-    // console.log(sysId);
     const application = await client
       .getSpace(SPACE_ID)
       .then((space) => space.getEnvironment(ENVIRONMENT))
@@ -114,6 +110,7 @@ const deleteApplication = async (sysId) => {
   }
 };
 
+//Function to convert contentful objects structure to use them easily
 const arrayFetchTransformer = (data) =>
   data.map((item) =>
     Object.keys(item.fields).reduce(

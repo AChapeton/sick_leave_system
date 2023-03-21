@@ -19,10 +19,10 @@ const ApplicationsTable = () => {
   const [currentUserApps, setCurrentUserApps] = useState([]);
   const [search, setSearch] = useState(data);
 
-  const formattedApplications = data.map((app) => {
-    app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
-    app.endDate = format(new Date(app.endDate), "MM/dd/yyyy");
-  });
+  // const formattedApplications = data.map((app) => {
+  //   app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
+  //   app.endDate = format(new Date(app.endDate), "MM/dd/yyyy");
+  // });
 
   // useEffect(() => {
   //   onObtainUserApps();
@@ -38,7 +38,6 @@ const ApplicationsTable = () => {
   //   console.log("useEffect", data);
   // }, [data]);
 
-  // eliminar = react query
   console.log(data);
 
   const handleSearch = (e) => {
@@ -82,7 +81,8 @@ const ApplicationsTable = () => {
     },
     {
       name: "Application date",
-      selector: (row) => row.startDate,
+      // selector: (row) => row.startDate,
+      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
     },
     {
       name: "Medical unit",
@@ -98,11 +98,13 @@ const ApplicationsTable = () => {
     },
     {
       name: "Start date",
-      selector: (row) => row.startDate,
+      // selector: (row) => row.startDate,
+      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
     },
     {
       name: "End date",
-      selector: (row) => row.endDate,
+      // selector: (row) => row.endDate,
+      selector: (row) => format(new Date(row.endDate), "MM/dd/yyyy"),
     },
     {
       name: "Actions",
@@ -122,7 +124,8 @@ const ApplicationsTable = () => {
     },
     {
       name: "Application date",
-      selector: (row) => row.startDate,
+      // selector: (row) => row.startDate,
+      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
     },
     {
       name: "Medical unit",
@@ -138,11 +141,13 @@ const ApplicationsTable = () => {
     },
     {
       name: "Start date",
-      selector: (row) => row.startDate,
+      // selector: (row) => row.startDate,
+      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
     },
     {
       name: "End date",
-      selector: (row) => row.endDate,
+      // selector: (row) => row.endDate,
+      selector: (row) => format(new Date(row.endDate), "MM/dd/yyyy"),
     },
     {
       name: "Actions",
