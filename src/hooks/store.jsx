@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+//Zustand function to save user credentials after logged in
+//Persist logged user data
 const useLogin = create(
   persist(
     (set) => ({
@@ -20,22 +22,4 @@ const useLogin = create(
   )
 );
 
-const useSignin = create((set) => ({
-  chooseRol: "",
-  setRole: (role) => {
-    set((state) => {
-      return { chooseRol: role };
-    });
-  },
-}));
-
-const useApplications = create((set) => ({
-  applications: [],
-  setApplications: (apps) => {
-    set((state) => {
-      return { applications: apps };
-    });
-  },
-}));
-
-export { useLogin, useSignin, useApplications };
+export { useLogin };

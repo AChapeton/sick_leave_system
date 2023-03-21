@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { deleteApplication } from "../useContentful";
-import { useFetchUserApps } from "./useObtainUserApps";
 
 const deleteApp = async (row) => {
   deleteApplication(row.sysId);

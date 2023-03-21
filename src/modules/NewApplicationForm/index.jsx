@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { differenceInCalendarDays, parseISO } from "date-fns";
-import { useLogin, useApplications } from "../../hooks/store";
+import { useLogin } from "../../hooks/store";
 import { createApplication, getAllEmployees } from "../../useContentful";
 import { v4 } from "uuid";
 const DEFAULT_LNG = "en-US";

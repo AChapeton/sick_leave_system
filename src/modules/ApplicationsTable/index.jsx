@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLogin, useApplications } from "../../hooks/store";
+import { useLogin } from "../../hooks/store";
 import { useFetchUserApps } from "../../hooks/useObtainUserApps";
 import DataTable from "react-data-table-component";
 import { parse, format } from "date-fns";
