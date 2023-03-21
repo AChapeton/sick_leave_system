@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import { useLogin, useApplications } from "../../hooks/store";
 import { useFetchUserApps } from "../../hooks/useObtainUserApps";
-import { deleteApplication } from "../../useContentful";
 import DataTable from "react-data-table-component";
 import { parse, format } from "date-fns";
+import { useNavigate, Navigate, NavLink } from "react-router-dom";
+import { useDeleteApp } from "../../hooks/useDeleteApp";
 
 const ApplicationsTable = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const { data, isLoading, isError } = useFetchUserApps(loggedUser);
-  const applications = useApplications((state) => state.applications);
-  const setApplications = useApplications((state) => state.setApplications);
+  let row = {};
+  // const { newData, newIsLoading, newIsError } = useDeleteApp(row, loggedUser);
+  const navigate = useNavigate();
+  // const applications = useApplications((state) => state.applications);
+  // const setApplications = useApplications((state) => state.setApplications);
 
   // let currentUserApps = [];
   const [currentUserApps, setCurrentUserApps] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState(data);
 
   // const formattedApplications = applications.map((app) => {
   //   app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
@@ -30,16 +34,16 @@ const ApplicationsTable = () => {
   // }, []);
 
   // useEffect(() => {
-  //   console.log("data", data);
+  //   setSearch(data);
+  //   console.log("useEffect", data);
   // }, [data]);
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
 
-  console.log("data", data);
+  // eliminar = react query
+  console.log(data);
 
   const handleSearch = (e) => {
     if (e.target.value) {
-      const searchApps = currentUserApps.filter((app) => {
+      const searchApps = data.filter((app) => {
         return (
           app.doctorName.toLowerCase().includes(e.target.value.toLowerCase()) ||
           app.medicalUnit
@@ -52,13 +56,19 @@ const ApplicationsTable = () => {
       });
       setSearch(searchApps);
     } else {
-      setSearch(currentUserApps);
+      setSearch(data);
     }
   };
 
   const handleDelete = (row) => {
-    console.log(row);
-    deleteApplication(row.sysId);
+    // <NavLink to="/confirm_delete_app" state={row}>
+    //   Delete
+    // </NavLink>;
+    // <Navigate to="confirm_delete_app" />;
+    // setSearch(data);
+    // row = rowData()
+    // console.log("custom hook data table", newData);
+    // <Navigate to="/home" />;
   };
 
   const columnsHR = [
@@ -97,7 +107,10 @@ const ApplicationsTable = () => {
     {
       name: "Actions",
       selector: (row) => (
-        <button onClick={() => handleDelete(row)}>Delete</button>
+        // <button onClick={() => handleDelete(row)}>Delete</button>
+        <NavLink to="/confirm_delete_app" state={row}>
+          Delete
+        </NavLink>
       ),
     },
   ];
@@ -138,6 +151,9 @@ const ApplicationsTable = () => {
       ),
     },
   ];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
 
   return (
     <>
