@@ -1,11 +1,9 @@
-import { useLogin } from "./store";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
-  const loggedUser = useLogin((state) => state.loggedUser);
-  console.log("verify", loggedUser);
-  if (!loggedUser) {
-    return <Navigate to="/login" />;
+const ProtectedRoute = ({ user, reidrectPath = "/login", children }) => {
+  //Confirm if it exists logged user data
+  if (!user) {
+    return <Navigate to={reidrectPath} replace />;
   }
 
   return children;

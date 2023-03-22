@@ -19,18 +19,11 @@ const ApplicationsTable = () => {
   const [currentUserApps, setCurrentUserApps] = useState([]);
   const [search, setSearch] = useState(data);
 
-  // const formattedApplications = data.map((app) => {
-  //   app, (app.startDate = format(new Date(app.startDate), "MM/dd/yyyy"));
-  //   app.endDate = format(new Date(app.endDate), "MM/dd/yyyy");
-  // });
+  //UNO DE ESTOS DOS ES EL BUENO
 
   // useEffect(() => {
-  //   onObtainUserApps();
-  // }, []);
-
-  // useEffect(() => {
+  //   setSearch(data);
   //   console.log("Something changed");
-  //   onObtainUserApps();
   // }, []);
 
   // useEffect(() => {

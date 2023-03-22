@@ -5,17 +5,47 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { NewApplicationPage } from "./pages/NewApplicationPage";
 import { ConfirmDeleteApp } from "./pages/ConfirmDeleteApp";
 import { ProtectedRoute } from "./hooks/useProtectedRoute";
+import { useLogin } from "./hooks/store";
 
 function App() {
+  const loggedUser = useLogin((state) => state.loggedUser);
   return (
     <>
       <HashRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/new_application" element={<NewApplicationPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/confirm_delete_app" element={<ConfirmDeleteApp />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <HomePage user={loggedUser} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/new_application"
+            element={
+              <ProtectedRoute>
+                <NewApplicationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/confirm_delete_app"
+            element={
+              <ProtectedRoute>
+                <ConfirmDeleteApp />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<p>Not Found</p>} />
         </Routes>
       </HashRouter>
