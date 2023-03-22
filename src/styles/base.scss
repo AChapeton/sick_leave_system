@@ -1,4 +1,5 @@
 @import "./variables.scss";
+@import "./mixins.scss";
 
 html,
 body {
@@ -7,18 +8,43 @@ body {
 }
 
 .toast_success {
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 10px;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24.2px;
   color: var(--black);
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 26px;
-  padding: 8px 0;
-  background: var(--white);
+  justify-content: center;
+  align-items: center;
   font-family: var(--font-inter);
+
   & img {
     margin-right: 2px;
+    width: 98.33px;
+    height: 98.33px;
+    margin-bottom: 27px;
+  }
+
+  @include breakpoint(small) {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: initial;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    padding: 8px 0;
+    background: var(--white);
+    color: var(--black);
+
+    & img {
+      margin-right: 10px;
+      width: initial;
+      height: initial;
+      margin-bottom: 0;
+    }
   }
 }
