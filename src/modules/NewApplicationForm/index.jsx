@@ -26,15 +26,6 @@ const NewApplicationForm = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const [employees, setEmployees] = useState([]);
 
-  const notify = () => {
-    toast(<CustomSuccessAddedToast />, {
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: false,
-    });
-  };
-
   //Form hook to validate inputs
   const {
     register,
@@ -52,6 +43,16 @@ const NewApplicationForm = () => {
 
   //Declare variables with empty functions
   let onSubmit = () => {};
+
+  const notify = () => {
+    toast(<CustomSuccessAddedToast />, {
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+    });
+  };
+
   let getEmployees = () => {};
 
   //Evaluates if logged user has an HR role to fill select with employees's names
@@ -69,81 +70,87 @@ const NewApplicationForm = () => {
 
   //Form validations before submit
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
-    onSubmit = async (applicationData) => {
-      //Change dates format
-      const newStartDate = new Date(applicationData.startDate);
-      const newEndDate = new Date(applicationData.endDate);
-      //When a user with HR role logged in
-      if (loggedUser[0].role === "hr_specialist") {
-        console.log(applicationData);
-        await createApplication({
-          fields: {
-            applicationId: { [DEFAULT_LNG]: v4() },
-            employeeId: {
-              [DEFAULT_LNG]: {
-                sys: {
-                  type: "Link",
-                  linkType: "Entry",
-                  id: applicationData.sysId,
-                },
-              },
-            },
-            medicalUnit: { [DEFAULT_LNG]: applicationData.medicalUnit },
-            startDate: { [DEFAULT_LNG]: newStartDate },
-            endDate: { [DEFAULT_LNG]: newEndDate },
-            doctorName: { [DEFAULT_LNG]: applicationData.doctorName },
-            medicalDiagnostic: {
-              [DEFAULT_LNG]: applicationData.medicalDiagnostic,
-            },
-            coverageDays: {
-              [DEFAULT_LNG]: (applicationData.coverageDays = parseInt(
-                applicationData.coverageDays
-              )),
-            },
-          },
-        });
-      } else {
-        //When a user with Employee role logged in
-        //It takes logged user data to save it on the new application
-        applicationData.employeeId = loggedUser[0].employee.sysId;
-        await createApplication({
-          fields: {
-            applicationId: { [DEFAULT_LNG]: v4() },
-            employeeId: {
-              [DEFAULT_LNG]: {
-                sys: {
-                  type: "Link",
-                  linkType: "Entry",
-                  //It uses logged user data that is saved before
-                  id: applicationData.employeeId,
-                },
-              },
-            },
-            medicalUnit: { [DEFAULT_LNG]: applicationData.medicalUnit },
-            startDate: { [DEFAULT_LNG]: newStartDate },
-            endDate: { [DEFAULT_LNG]: newEndDate },
-            doctorName: { [DEFAULT_LNG]: applicationData.doctorName },
-            medicalDiagnostic: {
-              [DEFAULT_LNG]: applicationData.medicalDiagnostic,
-            },
-            coverageDays: {
-              [DEFAULT_LNG]: (applicationData.coverageDays = parseInt(
-                applicationData.coverageDays
-              )),
-            },
-          },
-        });
-      }
+    try {
+      onSubmit = async (applicationData, e) => {
+        e.preventDefault();
+        //Change dates format
+        const newStartDate = new Date(applicationData.startDate);
+        const newEndDate = new Date(applicationData.endDate);
+        //When a user with HR role logged in
+        if (applicationData) {
+          notify();
+        }
 
-      // notify();
-      //Returns Home after submit
-      navigate("/home");
-    };
+        if (loggedUser[0].role === "hr_specialist") {
+          await createApplication({
+            fields: {
+              applicationId: { [DEFAULT_LNG]: v4() },
+              employeeId: {
+                [DEFAULT_LNG]: {
+                  sys: {
+                    type: "Link",
+                    linkType: "Entry",
+                    id: applicationData.sysId,
+                  },
+                },
+              },
+              medicalUnit: { [DEFAULT_LNG]: applicationData.medicalUnit },
+              startDate: { [DEFAULT_LNG]: newStartDate },
+              endDate: { [DEFAULT_LNG]: newEndDate },
+              doctorName: { [DEFAULT_LNG]: applicationData.doctorName },
+              medicalDiagnostic: {
+                [DEFAULT_LNG]: applicationData.medicalDiagnostic,
+              },
+              coverageDays: {
+                [DEFAULT_LNG]: (applicationData.coverageDays = parseInt(
+                  applicationData.coverageDays
+                )),
+              },
+            },
+          });
+        } else {
+          //When a user with Employee role logged in
+          //It takes logged user data to save it on the new application
+          applicationData.employeeId = loggedUser[0].employee.sysId;
+          await createApplication({
+            fields: {
+              applicationId: { [DEFAULT_LNG]: v4() },
+              employeeId: {
+                [DEFAULT_LNG]: {
+                  sys: {
+                    type: "Link",
+                    linkType: "Entry",
+                    //It uses logged user data that is saved before
+                    id: applicationData.employeeId,
+                  },
+                },
+              },
+              medicalUnit: { [DEFAULT_LNG]: applicationData.medicalUnit },
+              startDate: { [DEFAULT_LNG]: newStartDate },
+              endDate: { [DEFAULT_LNG]: newEndDate },
+              doctorName: { [DEFAULT_LNG]: applicationData.doctorName },
+              medicalDiagnostic: {
+                [DEFAULT_LNG]: applicationData.medicalDiagnostic,
+              },
+              coverageDays: {
+                [DEFAULT_LNG]: (applicationData.coverageDays = parseInt(
+                  applicationData.coverageDays
+                )),
+              },
+            },
+          });
+        }
+
+        //Returns Home after submit
+        navigate("/home");
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
     <div>
-      <button onClick={notify}>test</button>
       <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)} className={styles.newApp}>
         {loggedUser[0].role === "hr_specialist" ? (
