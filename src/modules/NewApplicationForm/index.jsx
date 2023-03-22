@@ -144,101 +144,103 @@ const NewApplicationForm = () => {
           )}
         </div>
       ) : null}
-      <div className={styles.newApp__container}>
-        <label className={styles.newApp__label}>Medical unit</label>
-        <select
-          name="medicalUnit"
-          id="medicalUnit"
-          className={styles.newApp__input}
-          {...register("medicalUnit", { required: true })}
-        >
-          <option value="" disabled>
-            Select option
-          </option>
-          <option value="isss">ISSS</option>
-          <option value="minsal">MINSAL</option>
-        </select>
-        {errors.medicalUnit?.type === "required" && (
-          <p className={styles.newApp__error}>Medical unit is required</p>
-        )}
-      </div>
-      <div className={styles.newApp__container}>
-        <label className={styles.newApp__label}>Doctor</label>
-        <input
-          type="text"
-          name="doctorName"
-          id="doctorName"
-          className={styles.newApp__input}
-          {...register("doctorName", { required: true })}
-        />
-        {errors.doctorName?.type === "required" && (
-          <p className={styles.newApp__error}>Doctor's name is required</p>
-        )}
-      </div>
-      <div className={styles.newApp__container}>
-        <label className={styles.newApp__label}>Days of coverage</label>
-        <input
-          type="number"
-          name="coverageDays"
-          id="coverageDays"
-          className={styles.newApp__input}
-          // min="1"
-          {...register("coverageDays", { required: true, min: 1 })}
-        />
-        {errors.coverageDays?.type === "required" && (
-          <p className={styles.newApp__error}>Coverage days are required</p>
-        )}
-        {errors.coverageDays?.type === "min" && (
-          <p className={styles.newApp__error}>
-            Coverage days cannot be minor than 1
-          </p>
-        )}
-        {days !== Number(coverageDaysWatched.toString()) && (
-          <p className={styles.newApp__error}>
-            Converage days does not coincide with dates
-          </p>
-        )}
-      </div>
-      <div className={styles.newApp__container}>
-        <label className={styles.newApp__label}>Sick leave start date</label>
-        <input
-          type="date"
-          name="startDate"
-          id="startDate"
-          className={styles.newApp__input}
-          {...register("startDate", {
-            required: true,
-            validate: true,
-          })}
-        />
-        {errors.startDate?.type === "required" && (
-          <p className={styles.newApp__error}>Start date is required</p>
-        )}
-        {days <= 0 && (
-          <p className={styles.newApp__error}>
-            Start date cannot be bigger or equal than end date
-          </p>
-        )}
-      </div>
-      <div className={styles.newApp__container}>
-        <label className={styles.newApp__label}>Sick leave end date</label>
-        <input
-          type="date"
-          name="endDate"
-          id="endDate"
-          className={styles.newApp__input}
-          {...register("endDate", { required: true })}
-        />
-        {errors.endDate?.type === "required" && (
-          <p className={styles.newApp__error}>End date is required</p>
-        )}
+      <div className={styles.newApp__area}>
+        <div className={styles.newApp__container}>
+          <label className={styles.newApp__label}>Medical unit</label>
+          <select
+            name="medicalUnit"
+            id="medicalUnit"
+            className={styles.newApp__input}
+            {...register("medicalUnit", { required: true })}
+          >
+            <option value="" disabled>
+              Select option
+            </option>
+            <option value="isss">ISSS</option>
+            <option value="minsal">MINSAL</option>
+          </select>
+          {errors.medicalUnit?.type === "required" && (
+            <p className={styles.newApp__error}>Medical unit is required</p>
+          )}
+        </div>
+        <div className={styles.newApp__container}>
+          <label className={styles.newApp__label}>Doctor</label>
+          <input
+            type="text"
+            name="doctorName"
+            id="doctorName"
+            className={styles.newApp__input}
+            {...register("doctorName", { required: true })}
+          />
+          {errors.doctorName?.type === "required" && (
+            <p className={styles.newApp__error}>Doctor's name is required</p>
+          )}
+        </div>
+        <div className={styles.newApp__container}>
+          <label className={styles.newApp__label}>Days of coverage</label>
+          <input
+            type="number"
+            name="coverageDays"
+            id="coverageDays"
+            className={styles.newApp__input}
+            // min="1"
+            {...register("coverageDays", { required: true, min: 1 })}
+          />
+          {errors.coverageDays?.type === "required" && (
+            <p className={styles.newApp__error}>Coverage days are required</p>
+          )}
+          {errors.coverageDays?.type === "min" && (
+            <p className={styles.newApp__error}>
+              Coverage days cannot be minor than 1
+            </p>
+          )}
+          {days !== Number(coverageDaysWatched.toString()) && (
+            <p className={styles.newApp__error}>
+              Converage days does not coincide with dates
+            </p>
+          )}
+        </div>
+        <div className={styles.newApp__container}>
+          <label className={styles.newApp__label}>Sick leave start date</label>
+          <input
+            type="date"
+            name="startDate"
+            id="startDate"
+            className={styles.newApp__input}
+            {...register("startDate", {
+              required: true,
+              validate: true,
+            })}
+          />
+          {errors.startDate?.type === "required" && (
+            <p className={styles.newApp__error}>Start date is required</p>
+          )}
+          {days <= 0 && (
+            <p className={styles.newApp__error}>
+              Start date cannot be bigger or equal than end date
+            </p>
+          )}
+        </div>
+        <div className={styles.newApp__container}>
+          <label className={styles.newApp__label}>Sick leave end date</label>
+          <input
+            type="date"
+            name="endDate"
+            id="endDate"
+            className={styles.newApp__input}
+            {...register("endDate", { required: true })}
+          />
+          {errors.endDate?.type === "required" && (
+            <p className={styles.newApp__error}>End date is required</p>
+          )}
+        </div>
       </div>
       <div className={styles.newApp__container}>
         <label className={styles.newApp__label}>Medical diagnostic</label>
         <textarea
           name="medicalDiagnostic"
           id="medicalDiagnostic"
-          className={styles.newApp__input}
+          className={styles.newApp__textarea}
           cols="30"
           rows="10"
           {...register("medicalDiagnostic", { required: true })}
