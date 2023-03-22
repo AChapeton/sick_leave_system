@@ -7,9 +7,16 @@ const ProfilePage = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const loggedOut = useLogin((state) => state.loggedOut);
 
+  //Function to log out
   const onHandleLogout = () => {
+    //Erase logged user data
     loggedOut();
     navigate("/");
+  };
+
+  //Function to return Home
+  const onHandleReturn = () => {
+    navigate("/home");
   };
 
   return (
@@ -41,6 +48,7 @@ const ProfilePage = () => {
       </div>
       <div>
         <button onClick={onHandleLogout}>Log Out</button>
+        <button onClick={onHandleReturn}>Return</button>
       </div>
     </div>
   );
