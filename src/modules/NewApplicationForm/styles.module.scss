@@ -1,49 +1,35 @@
 @import "../../styles/variables.scss";
 @import "../../styles/mixins.scss";
 
-.login {
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 345px;
-  margin: 0 auto;
+.newApp {
   padding: 0 16px;
   &__title {
     font-weight: 600;
     font-size: 16px;
     line-height: 19.36px;
+  }
+
+  &__container {
+    margin-bottom: 12px;
+  }
+
+  &__label {
+    font-weight: 400;
+    font-size: 14px;
     color: var(--black);
-    margin-bottom: 24px;
+    width: 100%;
+    line-height: 16.94px;
   }
 
   &__input {
-    background-color: var(--whiteBg);
-    border: 1px solid var(--black);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16.94px;
-    color: var(--black);
     width: 100%;
     padding: 10px 12px;
-    margin-bottom: 16px;
-  }
-
-  &__span {
     font-weight: 400;
     font-size: 14px;
     line-height: 16.94px;
     color: var(--black);
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 25px;
-
-    &_link {
-      color: var(--blue);
-      font-size: 14px;
-      text-align: initial;
-    }
+    border: 1px solid var(--black);
+    margin: 7px 0;
   }
 
   &__button {

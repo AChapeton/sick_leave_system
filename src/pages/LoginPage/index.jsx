@@ -43,7 +43,9 @@ const LoginPage = () => {
           className={styles.login__input}
           {...register("username", { required: true })}
         />
-        {errors.username?.type === "required" && <p>Username is required</p>}
+        {errors.username?.type === "required" && (
+          <p className={styles.login__error}>Username is required</p>
+        )}
         <input
           type="password"
           placeholder="Password"
@@ -52,7 +54,9 @@ const LoginPage = () => {
           className={styles.login__input}
           {...register("password", { required: true })}
         />
-        {errors.password?.type === "required" && <p>Password is required</p>}
+        {errors.password?.type === "required" && (
+          <p className={styles.login__error}>Password is required</p>
+        )}
         <span className={styles.login__span_link}>Forgot password?</span>
         <button className={styles.login__button}>Log in</button>
       </form>
