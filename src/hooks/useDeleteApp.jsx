@@ -3,7 +3,7 @@ import { deleteApplication } from "../useContentful";
 
 //Function that calls Contentful logic
 const deleteApp = async (row) => {
-  deleteApplication(row.sysId);
+  await deleteApplication(row.sysId);
   return null;
 };
 
