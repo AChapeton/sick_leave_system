@@ -5,3 +5,20 @@ body {
   font-family: var(--font-inter);
   background-color: var(--whiteBg);
 }
+
+.toast_success {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  color: var(--black);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 26px;
+  padding: 8px 0;
+  background: var(--white);
+  font-family: var(--font-inter);
+  & img {
+    margin-right: 2px;
+  }
+}
