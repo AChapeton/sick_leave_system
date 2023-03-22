@@ -1,6 +1,10 @@
 import React from "react";
 import { useLogin } from "../../hooks/store";
 import { useNavigate, Navigate } from "react-router-dom";
+import styles from "./styles.module.scss";
+import profilePhoto from "../../assets/photo.svg";
+import editIcon from "../../assets/fi_edit.svg";
+import logoutIcon from "../../assets/fi_log-out.svg";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -20,35 +24,58 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
-      <div>
-        {loggedUser[0].employee.fullName}
-        <p>Edit profile</p>
+    <div className={styles.profile}>
+      <div className={styles.profile__header}>
+        <img
+          className={styles.profile__photo}
+          src={profilePhoto}
+          alt="Profile photo"
+        />
+        <h3 className={styles.profile__name}>
+          {loggedUser[0].employee.fullName}
+        </h3>
+        <div className={styles.profile__editContainer}>
+          <img src={editIcon} alt="Edit icon" />
+          <span className={styles.profile__edit}>Edit profile</span>
+        </div>
       </div>
 
-      <div>
-        <span>Username:</span>
-        <span>{loggedUser[0].username}</span>
-      </div>
-      <div>
-        <span>Employee number:</span>
-        <span>{loggedUser[0].employee.sysId}</span>
-      </div>
-      <div>
-        <span>Company start date:</span>
-        <span>{loggedUser[0].employee.startDate}</span>
-      </div>
-      <div>
-        <span>Position:</span>
-        <span>{loggedUser[0].employee.position}</span>
-      </div>
-      <div>
-        <span>ID Number:</span>
-        <span>{loggedUser[0].userId}</span>
-      </div>
-      <div>
-        <button onClick={onHandleLogout}>Log Out</button>
-        <button onClick={onHandleReturn}>Return</button>
+      <div className={styles.profile__body}>
+        <div className={styles.profile__container}>
+          <span className={styles.profile__label}>Username:</span>
+          <span className={styles.profile__text}>{loggedUser[0].username}</span>
+        </div>
+        <div className={styles.profile__container}>
+          <span className={styles.profile__label}>Employee number:</span>
+          <span className={styles.profile__text}>
+            {loggedUser[0].employee.sysId}
+          </span>
+        </div>
+        <div className={styles.profile__container}>
+          <span className={styles.profile__label}>Company start date:</span>
+          <span className={styles.profile__text}>
+            {loggedUser[0].employee.startDate}
+          </span>
+        </div>
+        <div className={styles.profile__container}>
+          <span className={styles.profile__label}>Position:</span>
+          <span className={styles.profile__text}>
+            {loggedUser[0].employee.position}
+          </span>
+        </div>
+        <div className={styles.profile__container}>
+          <span className={styles.profile__label}>ID Number:</span>
+          <span className={styles.profile__text}>{loggedUser[0].userId}</span>
+        </div>
+        <div>
+          <button className={styles.profile__logout} onClick={onHandleLogout}>
+            <img src={logoutIcon} alt="Log out icon" />
+            <span>Log Out</span>
+          </button>
+          <button className={styles.profile__button} onClick={onHandleReturn}>
+            Return
+          </button>
+        </div>
       </div>
     </div>
   );

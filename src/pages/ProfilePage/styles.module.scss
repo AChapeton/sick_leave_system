@@ -1,0 +1,83 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 16px;
+  background-color: var(--whiteBg);
+  max-width: 400px;
+  margin: 0 auto;
+
+  &__header {
+    background-color: var(--whiteyBg);
+    text-align: center;
+    width: 100%;
+    padding: 40px 0;
+  }
+
+  &__photo {
+    width: 110.83px;
+    height: 75.83px;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24.2px;
+    color: var(--black);
+    margin-bottom: 12px;
+  }
+
+  &__editContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__edit {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15.73px;
+    color: var(--blue);
+  }
+
+  &__container {
+    margin-bottom: 16px;
+  }
+
+  &__label {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16.94px;
+    color: var(--black);
+    margin-right: 4px;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.94px;
+    color: var(--black);
+  }
+
+  &__logout {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 5px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15.73px;
+    color: var(--red);
+  }
+
+  &__button {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15.73px;
+    color: var(--blueButton);
+  }
+}
