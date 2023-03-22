@@ -6,6 +6,7 @@ import { NewApplicationPage } from "./pages/NewApplicationPage";
 import { ConfirmDeleteApp } from "./pages/ConfirmDeleteApp";
 import { ProtectedRoute } from "./hooks/useProtectedRoute";
 import { useLogin } from "./hooks/store";
+import "./styles/base.scss";
 
 function App() {
   return (
