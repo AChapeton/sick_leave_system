@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 const NewApplicationPage = () => {
   return (
     <div className={styles.newAppPage}>
-      <p className={styles.newAppPage__title}>NewApplicationPage</p>
+      <p className={styles.newAppPage__title}>Sick leave application</p>
       <NewApplicationForm />
     </div>
   );

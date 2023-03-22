@@ -14,5 +14,11 @@
     line-height: 19.36px;
     color: var(--black);
     margin-bottom: 21px;
+
+    @include breakpoint(large) {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 44.82px;
+    }
   }
 }
