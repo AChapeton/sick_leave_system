@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { differenceInCalendarDays, parseISO } from "date-fns";
 import { useLogin } from "../../hooks/store";
+import { useCompareDates } from "../../hooks/useCompareDates";
 import { createApplication, getAllEmployees } from "../../useContentful";
 import { v4 } from "uuid";
 const DEFAULT_LNG = "en-US";
@@ -11,22 +11,8 @@ const NewApplicationForm = () => {
   const navigate = useNavigate();
   const loggedUser = useLogin((state) => state.loggedUser);
   const [employees, setEmployees] = useState([]);
-  const [days, setDays] = useState(0);
 
-  let onSubmit = () => {};
-  let getEmployees = () => {};
-
-  if (loggedUser[0].role === "hr_specialist") {
-    getEmployees = async () => {
-      const allEmployees = await getAllEmployees();
-      setEmployees(allEmployees);
-    };
-  }
-
-  useEffect(() => {
-    getEmployees();
-  }, []);
-
+  //Form hook to validate inputs
   const {
     register,
     watch,
@@ -35,14 +21,36 @@ const NewApplicationForm = () => {
     handleSubmit,
   } = useForm();
 
+  const coverageDaysWatched = watch(["coverageDays"]);
   const startDateWatched = watch(["startDate"]);
   const endDateWatched = watch(["endDate"]);
-  const coverageDaysWatched = watch(["coverageDays"]);
+  const { days } = useCompareDates(startDateWatched, endDateWatched);
+  console.log(days);
 
+  //Declare variables with empty functions
+  let onSubmit = () => {};
+  let getEmployees = () => {};
+
+  //Evaluates if logged user has an HR role to fill select with employees's names
+  if (loggedUser[0].role === "hr_specialist") {
+    getEmployees = async () => {
+      const allEmployees = await getAllEmployees();
+      setEmployees(allEmployees);
+    };
+  }
+
+  //Calls getEmployees on first render
+  useEffect(() => {
+    getEmployees();
+  }, []);
+
+  //Form validations before submit
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
     onSubmit = async (applicationData) => {
+      //Change dates format
       const newStartDate = new Date(applicationData.startDate);
       const newEndDate = new Date(applicationData.endDate);
+      //When a user with HR role logged in
       if (loggedUser[0].role === "hr_specialist") {
         console.log(applicationData);
         await createApplication({
@@ -72,9 +80,9 @@ const NewApplicationForm = () => {
           },
         });
       } else {
+        //When a user with Employee role logged in
+        //It takes logged user data to save it on the new application
         applicationData.employeeId = loggedUser[0].employee.sysId;
-        console.log(applicationData);
-        console.log(v4());
         await createApplication({
           fields: {
             applicationId: { [DEFAULT_LNG]: v4() },
@@ -83,6 +91,7 @@ const NewApplicationForm = () => {
                 sys: {
                   type: "Link",
                   linkType: "Entry",
+                  //It uses logged user data that is saved before
                   id: applicationData.employeeId,
                 },
               },
@@ -102,18 +111,10 @@ const NewApplicationForm = () => {
           },
         });
       }
+      //Returns Home after submit
       navigate("/home");
-      // <Navigate to="/home" />;
     };
   }
-
-  useEffect(() => {
-    const days = differenceInCalendarDays(
-      parseISO(...endDateWatched),
-      parseISO(...startDateWatched)
-    );
-    setDays(days);
-  }, [startDateWatched, endDateWatched]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

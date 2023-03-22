@@ -22,7 +22,7 @@ const useSearch = (value, data) => {
       //If search input is empty
       setSearch(data);
     }
-  }, [value]);
+  }, [value, data]);
 
   return { search };
 };
