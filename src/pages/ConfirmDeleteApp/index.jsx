@@ -9,8 +9,6 @@ const ConfirmDeleteApp = () => {
   const location = useLocation();
   const app = location.state;
   const navigate = useNavigate();
-  const loggedUser = useLogin((state) => state.loggedUser);
-  console.log(app);
 
   const {
     register,
@@ -20,15 +18,15 @@ const ConfirmDeleteApp = () => {
     handleSubmit,
   } = useForm();
 
+  //Cancel delete option
   const onHandleCancel = () => {
     navigate("/home");
   };
 
+  //Calls delete contentful function
   const onSubmit = () => {
-    // useDeleteApp(app);
     deleteApplication(app.sysId);
     navigate("/home");
-    // <Navigate to="/home" />;
   };
 
   return (

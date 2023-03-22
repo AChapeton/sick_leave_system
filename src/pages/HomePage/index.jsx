@@ -8,7 +8,9 @@ const HomePage = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const loggedOut = useLogin((state) => state.loggedOut);
 
+  //Return to log in page
   const onHandleLogout = () => {
+    //Erase logged user data
     loggedOut();
     navigate("/");
   };
