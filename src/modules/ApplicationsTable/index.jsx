@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLogin } from "../../hooks/store";
 import { useFetchUserApps } from "../../hooks/useObtainUserApps";
+import { columnsHR, columnsEmployee } from "./columns";
 import DataTable from "react-data-table-component";
-import { format } from "date-fns";
-import { useNavigate, Navigate, NavLink } from "react-router-dom";
 
 const ApplicationsTable = () => {
   //Calls logged user data
@@ -45,94 +44,6 @@ const ApplicationsTable = () => {
       setSearch(data);
     }
   };
-
-  const columnsHR = [
-    {
-      name: "Employee",
-      selector: (row) => row.employee.fullName,
-    },
-    {
-      name: "Medical diagnostic",
-      selector: (row) => row.medicalDiagnostic,
-    },
-    {
-      name: "Application date",
-      //Change date format
-      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
-    },
-    {
-      name: "Medical unit",
-      selector: (row) => row.medicalUnit,
-    },
-    {
-      name: "Doctor",
-      selector: (row) => row.doctorName,
-    },
-    {
-      name: "Days of coverage",
-      selector: (row) => row.coverageDays,
-    },
-    {
-      name: "Start date",
-      //Change date format
-      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
-    },
-    {
-      name: "End date",
-      //Change date format
-      selector: (row) => format(new Date(row.endDate), "MM/dd/yyyy"),
-    },
-    {
-      name: "Actions",
-      //Moves to confirmation delete page who receives row's data
-      selector: (row) => (
-        <NavLink to="/confirm_delete_app" state={row}>
-          Delete
-        </NavLink>
-      ),
-    },
-  ];
-
-  const columnsEmployee = [
-    {
-      name: "Medical diagnostic",
-      selector: (row) => row.medicalDiagnostic,
-    },
-    {
-      name: "Application date",
-      //Change date format
-      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
-    },
-    {
-      name: "Medical unit",
-      selector: (row) => row.medicalUnit,
-    },
-    {
-      name: "Doctor",
-      selector: (row) => row.doctorName,
-    },
-    {
-      name: "Days of coverage",
-      selector: (row) => row.coverageDays,
-    },
-    {
-      name: "Start date",
-      //Change date format
-      selector: (row) => format(new Date(row.startDate), "MM/dd/yyyy"),
-    },
-    {
-      name: "End date",
-      //Change date format
-      selector: (row) => format(new Date(row.endDate), "MM/dd/yyyy"),
-    },
-    {
-      name: "Actions",
-      //Moves to confirmation delete page who receives row's data
-      selector: (row) => (
-        <button onClick={() => handleDelete(row)}>Delete</button>
-      ),
-    },
-  ];
 
   //Waiting for data to be obtained
   if (isLoading) return <div>Loading...</div>;
