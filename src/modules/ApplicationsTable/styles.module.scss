@@ -1,0 +1,18 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.application {
+  &__input {
+    &_search {
+      background-color: var(--white);
+      border: 1px solid var(--gray);
+      padding: 15px;
+      margin-bottom: 33px;
+      border-radius: 10px;
+      color: var(--grayText);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+}

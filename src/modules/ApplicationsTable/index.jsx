@@ -4,6 +4,7 @@ import { useFetchUserApps } from "../../hooks/useObtainUserApps";
 import { useSearch } from "../../hooks/useSearch";
 import { columnsHR, columnsEmployee } from "./columns";
 import DataTable from "react-data-table-component";
+import styles from "./styles.module.scss";
 
 const ApplicationsTable = () => {
   //Calls logged user data
@@ -35,6 +36,8 @@ const ApplicationsTable = () => {
         name="searchValue"
         id="searchValue"
         onChange={handleSearch}
+        className={styles.application__input_search}
+        placeholder="Search"
       />
       <DataTable
         columns={

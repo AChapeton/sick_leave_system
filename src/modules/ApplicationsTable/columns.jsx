@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { NavLink } from "react-router-dom";
+import trashIcon from "../../assets/fi_trash-2.svg";
 
 const columnsHR = [
   {
@@ -42,7 +43,7 @@ const columnsHR = [
     //Moves to confirmation delete page who receives row's data
     selector: (row) => (
       <NavLink to="/confirm_delete_app" state={row}>
-        Delete
+        <img src={trashIcon} alt="Trash icon" />
       </NavLink>
     ),
   },
@@ -84,7 +85,9 @@ const columnsEmployee = [
     name: "Actions",
     //Moves to confirmation delete page who receives row's data
     selector: (row) => (
-      <button onClick={() => handleDelete(row)}>Delete</button>
+      <NavLink to="/confirm_delete_app" state={row}>
+        <img src={trashIcon} alt="Trash icon" />
+      </NavLink>
     ),
   },
 ];
