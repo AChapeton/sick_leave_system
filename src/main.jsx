@@ -6,6 +6,7 @@ import { queryClient } from "./queryClient";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    {/* Providing query client tool to App */}
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
