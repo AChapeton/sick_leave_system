@@ -21,11 +21,11 @@ const NewApplicationForm = () => {
     handleSubmit,
   } = useForm();
 
+  //Custom hook to obtain days between two dates
   const coverageDaysWatched = watch(["coverageDays"]);
   const startDateWatched = watch(["startDate"]);
   const endDateWatched = watch(["endDate"]);
   const { days } = useCompareDates(startDateWatched, endDateWatched);
-  console.log(days);
 
   //Declare variables with empty functions
   let onSubmit = () => {};
@@ -37,12 +37,12 @@ const NewApplicationForm = () => {
       const allEmployees = await getAllEmployees();
       setEmployees(allEmployees);
     };
-  }
 
-  //Calls getEmployees on first render
-  useEffect(() => {
-    getEmployees();
-  }, []);
+    //Calls getEmployees on first render
+    useEffect(() => {
+      getEmployees();
+    }, []);
+  }
 
   //Form validations before submit
   if (days > 0 && days === Number(coverageDaysWatched.toString())) {
