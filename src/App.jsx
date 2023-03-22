@@ -8,7 +8,6 @@ import { ProtectedRoute } from "./hooks/useProtectedRoute";
 import { useLogin } from "./hooks/store";
 
 function App() {
-  const loggedUser = useLogin((state) => state.loggedUser);
   return (
     <>
       <HashRouter>
@@ -18,7 +17,7 @@ function App() {
             path="/home"
             element={
               <ProtectedRoute>
-                <HomePage user={loggedUser} />
+                <HomePage />
               </ProtectedRoute>
             }
           />

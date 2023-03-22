@@ -2,21 +2,14 @@ import { useEffect, useState } from "react";
 import { useLogin } from "../../hooks/store";
 import { useFetchUserApps } from "../../hooks/useObtainUserApps";
 import DataTable from "react-data-table-component";
-import { parse, format } from "date-fns";
+import { format } from "date-fns";
 import { useNavigate, Navigate, NavLink } from "react-router-dom";
-import { useDeleteApp } from "../../hooks/useDeleteApp";
 
 const ApplicationsTable = () => {
   const loggedUser = useLogin((state) => state.loggedUser);
   const { data, isLoading, isError } = useFetchUserApps(loggedUser);
-  let row = {};
-  // const { newData, newIsLoading, newIsError } = useDeleteApp(row, loggedUser);
-  const navigate = useNavigate();
-  // const applications = useApplications((state) => state.applications);
-  // const setApplications = useApplications((state) => state.setApplications);
+  // const navigate = useNavigate();
 
-  // let currentUserApps = [];
-  const [currentUserApps, setCurrentUserApps] = useState([]);
   const [search, setSearch] = useState(data);
 
   //UNO DE ESTOS DOS ES EL BUENO
