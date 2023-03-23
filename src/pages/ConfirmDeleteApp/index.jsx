@@ -45,9 +45,9 @@ const ConfirmDeleteApp = () => {
   };
 
   //Calls delete contentful function
-  const onSubmit = () => {
-    notify();
-    deleteApplication(app.sysId);
+  const onSubmit = async () => {
+    await notify();
+    await deleteApplication(app.sysId);
     navigate("/home", { replace: true });
   };
 
