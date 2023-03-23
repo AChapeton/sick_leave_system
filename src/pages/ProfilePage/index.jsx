@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import profilePhoto from "../../assets/photo.svg";
 import editIcon from "../../assets/fi_edit.svg";
 import logoutIcon from "../../assets/fi_log-out.svg";
+import { format } from "date-fns";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const ProfilePage = () => {
         <div className={styles.profile__container}>
           <span className={styles.profile__label}>Company start date:</span>
           <span className={styles.profile__text}>
-            {loggedUser[0].employee.startDate}
+            {format(new Date(loggedUser[0].employee.startDate), "MM/dd/yyyy")}
           </span>
         </div>
         <div className={styles.profile__container}>

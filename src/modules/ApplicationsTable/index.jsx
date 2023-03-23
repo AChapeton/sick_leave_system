@@ -12,6 +12,15 @@ const ApplicationsTable = () => {
   //Calls custom hook that fetch applications
   const { data, isLoading, isError } = useFetchUserApps(loggedUser);
   console.log(data);
+
+  const [, forceUpdate] = useState();
+
+  useEffect(() => {
+    setTimeout(() => {
+      forceUpdate;
+    }, 2000);
+  }, []);
+
   //Local storage to save search input value
   const [searchValue, setSearchValue] = useState("");
   //Calls custom hook that looks for search input value

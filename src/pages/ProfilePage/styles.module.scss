@@ -72,6 +72,7 @@
     font-size: 13px;
     line-height: 15.73px;
     color: var(--red);
+    cursor: pointer;
   }
 
   &__button {
@@ -79,5 +80,6 @@
     font-size: 13px;
     line-height: 15.73px;
     color: var(--blueButton);
+    cursor: pointer;
   }
 }
